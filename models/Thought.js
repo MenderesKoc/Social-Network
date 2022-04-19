@@ -1,41 +1,37 @@
 const { Schema, model, Types } = require('mongoose');
 const moment = require('moment');
 
-const ReactionSchema = new Schema({
-    reactionId: {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId()
-    },
-    reactionBody: {
-        type: String,
-        required: true,
-        maxlength: 280
-    },
-    username: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        get: createdAtVal => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
-    }
-},
+const ReactionSchema = new Schema(
     {
-        toJSON: {
-            virtuals: true,
-            getters: true
+        reactionId: {
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId(),
         },
-        id: false
+        reactionBody: {
+            type: String,
+            required: [true, 'Please enter a reaction'],
+            trim: true,
+            maxLength: [280, 'Reaction must be less than 280 characters'],
+        },
+        username: {
+            type: String,
+            required: [true, 'Please enter a username'],
+            trim: true,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: (createdAtVal) => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
+        }
     }
-);
+)
+
 
 const ThoughtSchema = new Schema({
     thoughtText: {
         type: String,
         required: true,
-        minlength: 1,
-        maxlength: 280
+        validate: [({ length }) => length > 0 && length <= 280, 'Thoughts can only be between 1 and 280 characters long!']
     },
     createdAt: {
         type: Date,
@@ -54,7 +50,7 @@ const ThoughtSchema = new Schema({
             virtuals: true,
             getters: true
         },
-        id: false
+
     }
 );
 
