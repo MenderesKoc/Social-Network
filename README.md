@@ -22,7 +22,7 @@ An API building platform that utilizes MongoDB and Mongoose to manage data for a
 
 ## Demo of app
 
-[Demo of app]https://youtu.be/kg4zYIZ9lFM)
+[Demo of app](https://youtu.be/kg4zYIZ9lFM)
 
 ## Questions
   
